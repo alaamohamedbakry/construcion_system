@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="construction_bid_file_tree" model="ir.ui.view">
+        <field name="name">construction.bid.file.tree</field>
+        <field name="model">construction.bid.file</field>
+
+        <field name="arch" type="xml">
+
+            <tree string="Bid Files"
+                  decoration-info="state == 'uploaded'"
+                  decoration-warning="state == 'reviewed'"
+                  decoration-success="state == 'approved'">
+
+                <field name="name"
+                       string="Bid Reference"/>
+
+                <field name="tender_id"
+                       string="Tender"/>
+
+                <field name="boq_id"
+                       string="BOQ"/>
+
+                <field name="estimation_id"
+                       string="Estimation"/>
+
+                <field name="duration"
+                       string="Duration (Days)"/>
+
+                <field name="state"
+                       string="Status"
+                       widget="badge"/>
+
+            </tree>
+
+        </field>
+
+    </record>
+
+
+
+
+    <record id="construction_bid_file_form" model="ir.ui.view">
+
+        <field name="name">construction.bid.file.form</field>
+        <field name="model">construction.bid.file</field>
+
+
+        <field name="arch" type="xml">
+
+
+            <form string="Bid File">
+
+
+                <header>
+
+
+                    <button name="action_upload"
+                            type="object"
+                            string="Upload"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+
+                    <button name="action_review"
+                            type="object"
+                            string="Review"
+                            class="btn-primary"
+                            invisible="state != 'uploaded'"/>
+
+
+                    <button name="action_approve"
+                            type="object"
+                            string="Approve"
+                            class="btn-primary"
+                            invisible="state != 'reviewed'"/>
+
+
+                    <button name="action_reset_to_draft"
+                            type="object"
+                            string="Reset to Draft"
+                            invisible="state == 'draft'"/>
+
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,uploaded,reviewed,approved"/>
+
+
+                </header>
+
+
+
+
+
+                <sheet>
+
+
+                    <div class="oe_title">
+
+                        <label for="name"/>
+
+                        <h1>
+
+                            <field name="name"
+                                   readonly="1"/>
+
+                        </h1>
+
+                    </div>
+
+
+
+
+
+                    <group>
+
+
+                        <group string="Tender Information">
+
+                            <field name="tender_id"/>
+
+                            <field name="duration"/>
+
+                        </group>
+
+
+
+                        <group string="Cost Information">
+
+                            <field name="boq_id"/>
+
+                            <field name="estimation_id"/>
+
+                        </group>
+
+
+                    </group>
+
+
+
+
+
+
+
+                    <notebook>
+
+
+
+
+
+                        <page string="Bid Documents">
+
+
+                            <group>
+
+
+                                <group string="Drawings">
+
+                                    <field name="drawings"
+                                           filename="drawings_filename"/>
+
+                                    <field name="drawings_filename"
+                                           invisible="1"/>
+
+                                </group>
+
+
+
+
+                                <group string="Specifications">
+
+                                    <field name="specifications"
+                                           filename="specifications_filename"/>
+
+                                    <field name="specifications_filename"
+                                           invisible="1"/>
+
+                                </group>
+
+
+                            </group>
+
+
+
+
+
+                            <separator string="BOQ File"/>
+
+
+
+
+                            <group>
+
+
+                                <field name="boq_file"
+                                       filename="boq_file_filename"/>
+
+
+                                <field name="boq_file_filename"
+                                       invisible="1"/>
+
+
+                            </group>
+
+
+
+
+                        </page>
+
+
+
+
+
+
+
+
+                        <page string="Notes">
+
+
+                            <field name="notes"
+                                   placeholder="Add notes about this bid file..."/>
+
+
+                        </page>
+
+
+
+
+
+                    </notebook>
+
+
+
+
+
+                </sheet>
+
+
+
+
+
+
+                <div class="oe_chatter">
+
+                    <field name="message_follower_ids"/>
+
+                    <field name="activity_ids"/>
+
+                    <field name="message_ids"/>
+
+                </div>
+
+
+
+
+
+            </form>
+
+
+        </field>
+
+
+    </record>
+
+
+</odoo>

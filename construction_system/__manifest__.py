@@ -16,15 +16,21 @@ Long description of module's purpose
     # for the full list
     'category': 'Uncategorized',
     'version': '0.1',
-
+    'application': True,
     # any module necessary for this one to work correctly
     'depends': ['base','mail','project','purchase','stock','account_accountant','documents','sale_management','crm', 'advanced_tender_management'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'data/bid_file_sequence.xml',
+        'views/menu.xml',
+        'views/bid_view.xml',
+        'views/boq_views.xml',
+        'views/estimation.xml',
         'views/views.xml',
         'views/templates.xml',
+        
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="action_construction_bid_file" model="ir.actions.act_window">
+        <field name="name">Bid Files</field>
+        <field name="res_model">construction.bid.file</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="construction_bid_file_tree"/>
+    </record>
+
+
+
+    <record id="action_construction_boq" model="ir.actions.act_window">
+        <field name="name">BOQs</field>
+        <field name="res_model">construction.boq</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_construction_boq_tree"/>
+    </record>
+
+
+
+    <record id="action_construction_estimation" model="ir.actions.act_window">
+        <field name="name">Estimations</field>
+        <field name="res_model">construction.estimation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <menuitem
+        id="menu_construction_root"
+        name="Construction"
+        sequence="10"/>
+
+
+
+
+    <menuitem
+        id="menu_construction_bid_file"
+        name="Bid Files"
+        parent="menu_construction_root"
+        action="action_construction_bid_file"
+        sequence="15"/>
+
+
+
+
+    <menuitem
+        id="menu_construction_boq"
+        name="BOQs"
+        parent="menu_construction_root"
+        action="action_construction_boq"
+        sequence="20"/>
+
+
+
+
+    <menuitem
+        id="menu_construction_estimation"
+        name="Estimations"
+        parent="menu_construction_root"
+        action="action_construction_estimation"
+        sequence="25"/>
+
+
+</odoo>
