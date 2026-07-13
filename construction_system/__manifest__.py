@@ -18,18 +18,23 @@ Long description of module's purpose
     'version': '0.1',
     'application': True,
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','project','purchase','stock','account_accountant','documents','sale_management','crm', 'advanced_tender_management'],
+    'depends': ['base','mail','project','purchase','stock','account_accountant','documents','sale_management','crm', 'hr','advanced_tender_management'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'data/bid_file_sequence.xml',
-        'views/menu.xml',
-        'views/bid_view.xml',
-        'views/boq_views.xml',
-        'views/estimation.xml',
-        'views/views.xml',
-        'views/templates.xml',
+     'security/ir.model.access.csv',
+
+     'data/bid_file_sequence.xml',
+
+     'views/bid_view.xml',
+     'views/boq_views.xml',
+     'views/estimation.xml',
+     'views/tender_views.xml',
+
+     'views/menu.xml',
+
+     'views/views.xml',
+     'views/templates.xml',
         
     ],
     # only loaded in demonstration mode
