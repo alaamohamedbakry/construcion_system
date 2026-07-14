@@ -23,22 +23,35 @@
         <field name="res_model">construction.estimation</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_construction_contract" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+        <field name="res_model">construction.contract</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="contract_view_tree"/>
+    </record>
     <menuitem
         id="menu_construction_root"
         name="Construction"
         sequence="10"/>
     <menuitem
+    id="menu_tender_management"
+    name="Tender Management"
+    parent="menu_construction_root"
+    sequence="10"/>
+    <!-- Tenders -->
+    <menuitem
     id="menu_construction_tender"
     name="Tenders"
-    parent="menu_construction_root"
+    parent="menu_tender_management"
     action="action_tender"
     sequence="10"/>
+    <!-- Bid Files -->
     <menuitem
-        id="menu_construction_bid_file"
-        name="Bid Files"
-        parent="menu_construction_root"
-        action="action_construction_bid_file"
-        sequence="15"/>
+    id="menu_construction_bid_file"
+    name="Bid Files"
+    parent="menu_tender_management"
+    action="action_construction_bid_file"
+    sequence="20"/>
     <menuitem
         id="menu_construction_boq"
         name="BOQs"
@@ -50,5 +63,11 @@
         name="Estimations"
         parent="menu_construction_root"
         action="action_construction_estimation"
+        sequence="25"/>
+    <menuitem
+        id="menu_construction_contract"
+        name="Contracts"
+        parent="menu_construction_root"
+        action="action_construction_contract"
         sequence="25"/>
 </odoo>

@@ -23,4 +23,13 @@
     </record>
 
 
+     <record id="seq_construction_contract" model="ir.sequence">
+        <field name="name">Contracts</field>
+        <field name="code">construction.contract</field>
+        <field name="prefix">CONT/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+    </record>
+
+
 </odoo>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-
- <record id="tender_view_tree" model="ir.ui.view">
+    <record id="tender_view_tree" model="ir.ui.view">
         <field name="name">construction.tender.tree</field>
         <field name="model">construction.tender</field>
         <field name="arch" type="xml">
@@ -15,145 +13,67 @@
             </tree>
         </field>
     </record>
-
     <!-- Form View -->
     <record id="view_construction_tender_form" model="ir.ui.view">
         <field name="name">construction.tender.form</field>
         <field name="model">construction.tender</field>
         <field name="arch" type="xml">
             <form string="Construction Tender">
-
                 <header>
-                    <field name="state"  widget="statusbar" />
-                    <button string="Recieved" name="action_recieved" type="object" class="oe_highlight" invisible="state !='draft'"/>
-                    <button string="Review" name="action_review" type="object" class="oe_highlight" invisible="state in['draft','recieved']"/>
-                    <button string="Submit" name="action_submit" type="object" class="oe_highlight" invisible="state != 'draft'"/>
-                    <button string="won" name="action_award" type="object" class="oe_highlight" invisible="state in['recieved','review']"/>
-                    <button string="Lose" name="action_reject" type="object" class="oe_highlight" invisible="state in['recieved','review','won']"/>
-
-
+                    <button name="action_recieved"
+            string="Receive"
+            type="object"
+            class="oe_highlight"
+            invisible="state != 'draft'"/>
+                    <button name="action_review"
+            string="Review"
+            type="object"
+            class="oe_highlight"
+            invisible="state != 'received'"/>
+                    <button name="action_submit" string="Submit" type="object"  class="oe_highlight" invisible="state != 'review'"/>
+                    <button name="action_award" string="Award"  type="object" class="oe_highlight" invisible="state != 'submitted'"/>
+                    <button name="action_reject" string="Lose" type="object" class="btn-secondary"  invisible="state != 'submitted'"/>
+                    <field name="state" widget="statusbar"  statusbar_visible="draft,received,review,submitted,awarded,lost"/>
                 </header>
-
                 <sheet>
-                 <div class="oe_title">
-                            <h1>
-                                <field name="name" placeholder="Tender Name ..."/>
-                            </h1>
-                        </div>
-
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Tender Name ..."/>
+                        </h1>
+                    </div>
                     <!-- Smart Buttons -->
-                    <!-- <div class="oe_button_box" name="button_box">
-
-                        <button name="action_open_bid_file"
-                                type="object"
-                                class="oe_stat_button"
-                                icon="fa-folder-open">
-
-                            <field name="bid_file_count"
-                                   widget="statinfo"
-                                   string="Bid File"/>
-
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_bid_file" type="object" class="oe_stat_button" icon="fa-folder-open">
+                            <field name="bid_file_count" string="Bid Files" widget="statinfo"/>
                         </button>
-
-                        <button name="action_open_boq"
-                                type="object"
-                                class="oe_stat_button"
-                                icon="fa-list">
-
-                            <field name="boq_count"
-                                   widget="statinfo"
-                                   string="BOQ"/>
-
+                        <button name="action_open_boq" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="boq_count" string="BOQs" widget="statinfo"/>
                         </button>
-
-                        <button name="action_open_estimation"
-                                type="object"
-                                class="oe_stat_button"
-                                icon="fa-calculator">
-
-                            <field name="estimation_count"
-                                   widget="statinfo"
-                                   string="Estimation"/>
-
-                        </button>
-
-                        <button name="action_open_contract"
-                                type="object"
-                                class="oe_stat_button"
-                                icon="fa-file-text">
-
-                            <field name="contract_count"
-                                   widget="statinfo"
-                                   string="Contract"/>
-
-                        </button>
-
-                    </div> -->
-
+                    </div>
                     <group>
-
                         <group string="General Information">
-
-
                             <field name="customer_id"/>
-
-
                             <field name="assigned_engineer_id"/>
-
                         </group>
-
                         <group string="Tender Information">
-
                             <field name="issue_date"/>
-
                             <field name="submission_date"/>
-
                             <field name="estimated_value"/>
-
+                            <field name="estimation_id"/>
                         </group>
-
                     </group>
-
                     <notebook>
-
-                        <page string="Related Documents">
-
-                            <group>
-
-                                <field name="bid_file_id"/>
-
-                                <field name="boq_id"/>
-
-                                <field name="estimation_id"/>
-
-                                <!-- <field name="contract_id"/> -->
-
-                            </group>
-
-                        </page>
-
                         <page string="Notes">
-
                             <field name="notes"
                                    nolabel="1"/>
-
                         </page>
-
                     </notebook>
-
                 </sheet>
-
                 <div class="oe_chatter">
-
                     <field name="message_follower_ids"/>
-
                     <field name="message_ids"/>
-
                 </div>
-
             </form>
-
         </field>
     </record>
-
 </odoo>

@@ -5,3 +5,4 @@ access_construction_boq_line,construction.boq.line,model_construction_boq_line,b
 access_construction_estimation,construction.estimation,model_construction_estimation,base.group_user,1,1,1,1
 access_construction_estimation_line,construction.estimation.line,model_construction_estimation_line,base.group_user,1,1,1,1
 access_construction_tender,construction.tender,model_construction_tender,,1,1,1,1
+access_construction_contract,construction.contract,model_construction_contract,,1,1,1,1

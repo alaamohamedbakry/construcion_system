@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
     'application': True,
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','project','purchase','stock','account_accountant','documents','sale_management','crm', 'hr','advanced_tender_management'],
+    'depends': ['base','mail','project','purchase','stock','account_accountant','documents','sale_management','crm', 'hr'],
 
     # always loaded
     'data': [
@@ -30,6 +30,7 @@ Long description of module's purpose
      'views/boq_views.xml',
      'views/estimation.xml',
      'views/tender_views.xml',
+     'views/contract_view.xml',
 
      'views/menu.xml',
 

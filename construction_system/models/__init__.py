@@ -7,3 +7,4 @@ from . import construction_bid_file
 from . import construction_boq_line
 from . import construction_boq
 from . import estimation_line
+from . import construction_contract
