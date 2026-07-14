@@ -22,7 +22,7 @@ class ConstructionBOQ(models.Model):
         tracking=True
     )
     tender_id = fields.Many2one(
-        'tender.management',
+        'construction.tender',
         string='Tender',
         tracking=True
     )

@@ -8,3 +8,4 @@ from . import construction_boq_line
 from . import construction_boq
 from . import estimation_line
 from . import construction_contract
+from . import sale_order

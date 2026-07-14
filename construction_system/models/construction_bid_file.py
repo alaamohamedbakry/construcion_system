@@ -15,7 +15,7 @@ class ConstructionBidFile(models.Model):
     )
 
     tender_id = fields.Many2one(
-        "tender.management",
+        "construction.tender",
         string="Tender",
         required=True,
         tracking=True,

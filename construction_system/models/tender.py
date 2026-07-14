@@ -72,20 +72,16 @@ class ConstructionTender(models.Model):
         "tender_id", 
         string="BOQs"
     )
-    # contract_ids = fields.One2many(
-    #     "construction.contract", 
-    #     "tender_id", 
-    #     string="Contracts"
-    # )
-    estimation_id = fields.Many2one(
-        "construction.estimation",
-        string="Estimation"
+    contract_ids = fields.One2many(
+        "construction.contract", 
+        "tender_id", 
+        string="Contracts"
     )
 
     bid_file_count = fields.Integer(compute="_compute_bid_file_count")
     boq_count = fields.Integer(compute="_compute_boq_count")
     estimation_count = fields.Integer(compute="_compute_estimation_count")
-    # contract_count = fields.Integer(compute="_compute_contract_count")
+    contract_count = fields.Integer(compute="_compute_contract_count")
 
     _sql_constraints = [
         (
@@ -134,15 +130,12 @@ class ConstructionTender(models.Model):
         for rec in self:
             rec.boq_count = len(rec.boq_ids)
 
-    @api.depends('estimation_id')
-    def _compute_estimation_count(self):
-        for rec in self:
-            rec.estimation_count = 1 if rec.estimation_id else 0
+   
 
-    # @api.depends('contract_ids')
-    # def _compute_contract_count(self):
-    #     for rec in self:
-    #         rec.contract_count = len(rec.contract_ids)
+    @api.depends('contract_ids')
+    def _compute_contract_count(self):
+        for rec in self:
+            rec.contract_count = len(rec.contract_ids)
 
     def action_open_bid_file(self):
         self.ensure_one()
@@ -169,6 +162,22 @@ class ConstructionTender(models.Model):
         elif len(boqs) == 1:
             action["views"] = [(self.env.ref("construction_system.view_construction_boq_form").id, "form")]
             action["res_id"] = boqs.id
+        else:
+            action["domain"] = [("tender_id", "=", self.id)]
+        return action
+    
+
+    def action_open_contract(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("construction_system.action_construction_contract")
+        action['context'] = {'default_tender_id': self.id}
+        
+        contracts = self.contract_ids  
+        if len(contracts) > 1:
+            action["domain"] = [("id", "in", contracts.ids)]
+        elif len(contracts) == 1:
+            action["views"] = [(self.env.ref("construction_system.view_construction_contract_form").id, "form")]
+            action["res_id"] = contracts.id
         else:
             action["domain"] = [("tender_id", "=", self.id)]
         return action

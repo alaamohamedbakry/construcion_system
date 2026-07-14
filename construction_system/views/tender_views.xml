@@ -49,6 +49,9 @@
                         <button name="action_open_boq" type="object" class="oe_stat_button" icon="fa-list">
                             <field name="boq_count" string="BOQs" widget="statinfo"/>
                         </button>
+                        <button name="action_open_contract" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="contract_count" string="Contracts" widget="statinfo"/>
+                        </button>
                     </div>
                     <group>
                         <group string="General Information">
@@ -59,7 +62,6 @@
                             <field name="issue_date"/>
                             <field name="submission_date"/>
                             <field name="estimated_value"/>
-                            <field name="estimation_id"/>
                         </group>
                     </group>
                     <notebook>

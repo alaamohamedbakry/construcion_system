@@ -15,6 +15,8 @@ class ConstructionContract(models.Model):
 
     tender_id = fields.Many2one( "construction.tender", string="Tender")
 
+    estimation_id = fields.Many2one("construction.estimation",string="Estimation",readonly=True)
+
     contract_value = fields.Monetary(string="Contract Value",required=True,currency_field="currency_id",tracking=True)
 
     currency_id = fields.Many2one("res.currency",default=lambda self: self.env.company.currency_id,)
@@ -80,10 +82,19 @@ class ConstructionContract(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get("name", "NEW") == "NEW":
-                vals["name"] = self.env["ir.sequence"].next_by_code("construction.contract") or "NEW"
-        return super().create(vals_list)
+     for vals in vals_list:
+        if vals.get("name", "New") == "New":
+            vals["name"] = self.env["ir.sequence"].next_by_code(
+                "construction.contract"
+            ) or "New"
+
+        contracts = super().create(vals_list)
+
+     for contract in contracts:
+            if contract.estimation_id:
+                contract.estimation_id.contract_id = contract.id
+
+     return contracts
       
 
 
