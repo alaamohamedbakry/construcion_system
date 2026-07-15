@@ -31,9 +31,9 @@ Long description of module's purpose
      'views/estimation.xml',
      'views/tender_views.xml',
      'views/contract_view.xml',
-
+     'views/material_request_views.xml',
+     'views/project_views.xml',
      'views/menu.xml',
-
      'views/views.xml',
      'views/templates.xml',
         

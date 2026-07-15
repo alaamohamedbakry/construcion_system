@@ -6,3 +6,5 @@ access_construction_estimation,construction.estimation,model_construction_estima
 access_construction_estimation_line,construction.estimation.line,model_construction_estimation_line,base.group_user,1,1,1,1
 access_construction_tender,construction.tender,model_construction_tender,,1,1,1,1
 access_construction_contract,construction.contract,model_construction_contract,,1,1,1,1
+access_construction_material_request,construction.material.request,model_construction_material_request,base.group_user,1,1,1,1
+access_construction_material_request_line,construction.material.request.line,model_construction_material_request_line,base.group_user,1,1,1,1

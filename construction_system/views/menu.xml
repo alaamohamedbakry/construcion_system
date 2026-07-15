@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+
     <record id="action_tender" model="ir.actions.act_window">
         <field name="name">Tenders</field>
         <field name="res_model">construction.tender</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="tender_view_tree"/>
     </record>
+
+
     <record id="action_construction_bid_file" model="ir.actions.act_window">
         <field name="name">Bid Files</field>
         <field name="res_model">construction.bid.file</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="construction_bid_file_tree"/>
     </record>
+
+
     <record id="action_construction_boq" model="ir.actions.act_window">
         <field name="name">BOQs</field>
         <field name="res_model">construction.boq</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_construction_boq_tree"/>
     </record>
+
+
     <record id="action_construction_estimation" model="ir.actions.act_window">
         <field name="name">Estimations</field>
         <field name="res_model">construction.estimation</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+
     <record id="action_construction_contract" model="ir.actions.act_window">
         <field name="name">Contracts</field>
         <field name="res_model">construction.contract</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="contract_view_tree"/>
     </record>
+    
+    <record id="action_construction_material_request" model="ir.actions.act_window">
+    <field name="name">Material Requests</field>
+    <field name="res_model">construction.material.request</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_id" ref="view_material_request_tree"/>
+    </record>
+
+
     <menuitem
         id="menu_construction_root"
         name="Construction"
@@ -70,4 +89,12 @@
         parent="menu_construction_root"
         action="action_construction_contract"
         sequence="25"/>
+        <menuitem
+        id="menu_construction_material_request"
+        name="Material Requests"
+        parent="menu_construction_root"
+        action="action_construction_material_request"
+        sequence="30"/>
+
+        
 </odoo>

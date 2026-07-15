@@ -9,3 +9,8 @@ from . import construction_boq
 from . import estimation_line
 from . import construction_contract
 from . import sale_order
+from . import Material_Request
+from . import purchase_order
+from . import stock_picking
+from . import material_request_line
+from . import project
