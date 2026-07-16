@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="seq_construction_bid_file" model="ir.sequence">
         <field name="name">Bid File</field>
         <field name="code">construction.bid.file</field>
@@ -8,32 +7,19 @@
         <field name="padding">5</field>
         <field name="number_increment">1</field>
     </record>
-
-
     <record id="seq_construction_boq" model="ir.sequence">
-
         <field name="name">Construction BOQ</field>
-
         <field name="code">construction.boq</field>
-
         <field name="prefix">BOQ/</field>
-
         <field name="padding">4</field>
-
     </record>
-
-
-     <record id="seq_construction_contract" model="ir.sequence">
+    <record id="seq_construction_contract" model="ir.sequence">
         <field name="name">Contracts</field>
         <field name="code">construction.contract</field>
         <field name="prefix">CONT/</field>
         <field name="padding">5</field>
         <field name="number_increment">1</field>
     </record>
-
-    
-
-
     <record id="seq_material_request" model="ir.sequence">
         <field name="name">Material Request</field>
         <field name="code">construction.material.request</field>
@@ -42,8 +28,10 @@
         <field name="number_next">1</field>
         <field name="number_increment">1</field>
     </record>
-
-
-
-
+    <record id="seq_construction_cost_center" model="ir.sequence">
+        <field name="name">Construction Cost Center</field>
+        <field name="code">construction.cost.center</field>
+        <field name="prefix">CC/</field>
+        <field name="padding">4</field>
+    </record>
 </odoo>

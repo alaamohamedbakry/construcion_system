@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_project_form_inherit_cost_center" model="ir.ui.view">
+    <field name="name">project.project.form.inherit.cost.center</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.edit_project"/>
+    <field name="arch" type="xml">
+
+        <xpath expr="//div[@name='button_box']" position="inside">
+
+            <button name="action_open_cost_centers"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-money">
+
+                <field name="cost_center_count"
+                       widget="statinfo"
+                       string="Cost Centers"/>
+
+            </button>
+
+        </xpath>
+
+    </field>
+</record>
+
+</odoo>

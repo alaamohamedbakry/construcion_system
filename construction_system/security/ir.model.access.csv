@@ -8,3 +8,4 @@ access_construction_tender,construction.tender,model_construction_tender,,1,1,1,
 access_construction_contract,construction.contract,model_construction_contract,,1,1,1,1
 access_construction_material_request,construction.material.request,model_construction_material_request,base.group_user,1,1,1,1
 access_construction_material_request_line,construction.material.request.line,model_construction_material_request_line,base.group_user,1,1,1,1
+access_construction_cost_center_user,construction.cost.center.user,model_construction_cost_center,,1,1,1,1

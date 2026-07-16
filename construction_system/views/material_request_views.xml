@@ -173,6 +173,8 @@
 
                             <field name="task_id"/>
 
+                            <field name="cost_center_id" readonly="1"/>
+
                         </group>
 
                         <group string="Request Information">
