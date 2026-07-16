@@ -45,7 +45,7 @@
                     <group>
                         <group string="General Information">
                             <field name="customer_id"/>
-                            <field name="project_id"/>
+                            <field name="project_id" readonly="1"/>
                             <field name="tender_id"/>
                         </group>
                         <group string="Contract Information">
