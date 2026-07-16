@@ -65,6 +65,13 @@ class ConstructionCostCenter(models.Model):
         ("closed", "Closed"),
     ], default="active", tracking=True)
 
+    analytic_account_id = fields.Many2one(
+       "account.analytic.account",
+       string='Account Analtyic',
+        readonly=True)
+
+
+
 
 
     _sql_constraints = [
@@ -83,8 +90,24 @@ class ConstructionCostCenter(models.Model):
             vals["name"] = self.env["ir.sequence"].next_by_code(
                 "construction.cost.center"
             ) or "New"
+    
 
-        return super().create(vals_list)
+        records = super().create(vals_list)
+
+        plan = self.env["account.analytic.plan"].search(
+            [("name", "=", "Construction Cost Centers")],limit=1)
+
+
+        for rec in records:
+            analytic = self.env["account.analytic.account"].create({
+            "name": rec.name,
+            "plan_id": plan.id,
+
+            })
+
+            rec.analytic_account_id = analytic.id
+
+        return records
 
     @api.depends("planned_budget", "actual_cost")
     def _compute_budget(self):
@@ -104,3 +127,16 @@ class ConstructionCostCenter(models.Model):
     def _onchange_task_id(self):
       if self.task_id:
         self.project_id = self.task_id.project_id
+
+
+
+    def action_open_analytic(self):
+        self.ensure_one()
+
+        return {
+        "type": "ir.actions.act_window",
+        "name": "Analytic Account",
+        "res_model": "account.analytic.account",
+        "view_mode": "form",
+        "res_id": self.analytic_account_id.id,
+         }

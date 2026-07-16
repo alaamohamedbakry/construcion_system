@@ -36,6 +36,10 @@ class ConstructionContract(models.Model):
     notes = fields.Text(string="Notes")
 
 
+    project_count = fields.Integer(
+    compute="_compute_project_count")
+
+
     # invoice_ids = fields.One2many(
     #     "account.move",
     #     "contract_id",
@@ -117,6 +121,8 @@ class ConstructionContract(models.Model):
     def action_activate(self):
         for rec in self:
             rec.state = "active"
+            if rec.tender_id:
+                rec.tender_id.state = "awarded"
 
     def action_complete(self):
         for rec in self:
@@ -197,3 +203,56 @@ class ConstructionContract(models.Model):
     #     ]
 
     #     return action
+
+
+    def _compute_project_count(self):
+     for rec in self:
+        rec.project_count = 1 if rec.project_id else 0
+
+
+   
+    def action_create_project(self):
+        self.ensure_one()
+
+        project = self.env["project.project"].create({
+        "name": self.name,
+        "partner_id": self.customer_id.id,
+        "contract_id": self.id,
+         })
+
+        self.project_id = project.id
+
+    # Create Project BOQ
+        boq = self.env["construction.boq"].create({
+        "project_id": project.id,
+        "tender_id": self.tender_id.id,
+        })
+
+        for line in self.estimation_id.estimation_line_ids:
+            self.env["construction.boq.line"].create({
+            "boq_id": boq.id,
+            "name": line.name,
+            "product_id": line.product_id.id,
+            "uom_id": line.uom_id.id,
+            "quantity": line.quantity,
+            "unit_price": line.total_unit_cost,
+            })
+
+        return {
+        "type": "ir.actions.act_window",
+        "res_model": "project.project",
+        "view_mode": "form",
+        "res_id": project.id,
+        }
+    
+
+
+    def action_view_project(self):
+     self.ensure_one()
+
+     return {
+        "type": "ir.actions.act_window",
+        "res_model": "project.project",
+        "view_mode": "form",
+        "res_id": self.project_id.id,
+      }

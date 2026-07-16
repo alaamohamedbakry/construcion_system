@@ -238,6 +238,12 @@ class ConstructionMaterialRequest(models.Model):
 
                 for item in purchase_lines:
 
+                    analytic_distribution = {}
+
+                    if request.cost_center_id.analytic_account_id:
+                         analytic_distribution = {
+                             request.cost_center_id.analytic_account_id.id: 100, }
+
                     self.env['purchase.order.line'].create({
 
                         'order_id': po.id,
@@ -256,6 +262,10 @@ class ConstructionMaterialRequest(models.Model):
 
                         'name':
                             item['line'].product_id.display_name,
+
+
+                        "analytic_distribution": analytic_distribution,
+
                     })
 
 
@@ -306,36 +316,4 @@ class ConstructionMaterialRequest(models.Model):
             },
         }
     
-    def action_create_purchase_order(self):
-        self.ensure_one()
-
-        vendor = self._get_vendor() 
-
-        raise UserError(str(self.cost_center_id.display_name))
-
-
-        po = self.env["purchase.order"].create({
-        "partner_id": vendor.partner_id.id,
-        "material_request_id": self.id,
-        "cost_center_id": self.cost_center_id.id,
-         })
-
-        for line in self.material_line_ids:
-            self.env["purchase.order.line"].create({
-            "order_id": po.id,
-            "product_id": line.product_id.id,
-            "name": line.product_id.display_name,
-            "product_qty": line.requested_qty,
-            "price_unit": line.unit_cost,
-            "product_uom": line.product_id.uom_po_id.id,
-            "date_planned": fields.Datetime.now(),
-        })
-
-        self.purchase_order_ids = [(4, po.id)]
-
-        return {
-        "type": "ir.actions.act_window",
-        "res_model": "purchase.order",
-        "view_mode": "form",
-        "res_id": po.id,
-        }
+  

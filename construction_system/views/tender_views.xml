@@ -33,6 +33,7 @@
                     <button name="action_submit" string="Submit" type="object"  class="oe_highlight" invisible="state != 'review'"/>
                     <button name="action_award" string="Award"  type="object" class="oe_highlight" invisible="state != 'submitted'"/>
                     <button name="action_reject" string="Lose" type="object" class="btn-secondary"  invisible="state != 'submitted'"/>
+                    <button name="action_create_estimation" string="Create Estimation" type="object" class="btn-primary" invisible="state not in ['received','review']"/>
                     <field name="state" widget="statusbar"  statusbar_visible="draft,received,review,submitted,awarded,lost"/>
                 </header>
                 <sheet>
@@ -52,11 +53,14 @@
                         <button name="action_open_contract" type="object" class="oe_stat_button" icon="fa-list">
                             <field name="contract_count" string="Contracts" widget="statinfo"/>
                         </button>
+                        <button name="action_open_estimation"  type="object" class="oe_stat_button" icon="fa-calculator">
+                            <field name="estimation_count" widget="statinfo" string="Estimations"/>
+                        </button>
                     </div>
                     <group>
                         <group string="General Information">
                             <field name="customer_id"/>
-                            <field name="assigned_engineer_id"/>
+                            <field name="assigned_engineer_id" domain="[('job_id.name','=','Engineer')]"/>
                         </group>
                         <group string="Tender Information">
                             <field name="issue_date"/>

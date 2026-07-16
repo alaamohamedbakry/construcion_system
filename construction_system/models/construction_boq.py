@@ -44,21 +44,14 @@ class ConstructionBOQ(models.Model):
         'boq_id', 
         string='BOQ Lines'
     )
-    estimation_ids = fields.One2many(
-        'construction.estimation', 
-        'boq_id', 
-        string='Estimations'
-    )
+   
     # contract_ids = fields.One2many(
     #     'construction.contract', 
     #     'project_id', 
     #     string='Contracts'
     # )
     
-    estimation_count = fields.Integer(
-    string='Estimations',
-    compute='_compute_estimation_count'
-    )
+    
 
 
     total_quantity = fields.Float(
@@ -84,10 +77,7 @@ class ConstructionBOQ(models.Model):
             boq.total_cost = sum(line.total_cost for line in boq.boq_line_ids)
 
 
-    def _compute_estimation_count(self):
-        for rec in self:
-            rec.estimation_count = len(rec.estimation_ids)
-            
+          
             
     @api.model
     def create(self, vals):
@@ -118,34 +108,4 @@ class ConstructionBOQ(models.Model):
 
 
 
-    def action_create_estimation(self):
-        self.ensure_one()
-
-        estimation = self.env['construction.estimation'].create({
-            'boq_id': self.id,
-        })
-
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'construction.estimation',
-            'res_id': estimation.id,
-            'view_mode': 'form',
-        }
-        
-        
-        
-    def action_view_estimations(self):
-        self.ensure_one()
-
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Estimations',
-            'res_model': 'construction.estimation',
-            'view_mode': 'tree,form',
-            'domain': [
-                ('boq_id', '=', self.id)
-            ],
-            'context': {
-                'default_boq_id': self.id,
-            },
-        }
+    

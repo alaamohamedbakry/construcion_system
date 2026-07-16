@@ -11,27 +11,10 @@
 
                 <header>
 
-                     <div class="oe_button_box" name="button_box">
-
-                            <button name="action_view_estimations"
-                                    type="object"
-                                    class="oe_stat_button"
-                                    icon="fa-calculator">
-
-                                <field name="estimation_count"
-                                    widget="statinfo"
-                                    string="Estimations"/>
-
-                            </button>
-
-                    </div>
+                     
 
                     
-                    <button name="action_create_estimation"
-                            string="Create Estimation"
-                            type="object"
-                            class="btn-primary"/>
-
+                   
 
                     <button name="action_review"
                             string="Send Review"

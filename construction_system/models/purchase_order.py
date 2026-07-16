@@ -14,6 +14,13 @@ class PurchaseOrder(models.Model):
         string="Cost Center",
     )
 
+    analytic_account_id = fields.Many2one(
+    "account.analytic.account",
+    related="cost_center_id.analytic_account_id",
+    store=True,
+    readonly=True,
+)
+
     def button_confirm(self):
         res = super().button_confirm()
 

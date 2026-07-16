@@ -12,6 +12,12 @@ class ProjectProject(models.Model):
 
     cost_center_count = fields.Integer(compute="_compute_cost_center_count")
 
+
+    contract_id = fields.Many2one(
+        "construction.contract",
+        string="Contract",
+    )
+
     def _compute_cost_center_count(self):
         for project in self:
             project.cost_center_count = len(project.cost_center_ids)

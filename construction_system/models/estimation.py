@@ -13,17 +13,14 @@ class ConstructionEstimation(models.Model):
         default='New'
     )
 
+   
     boq_id = fields.Many2one(
         'construction.boq',
-        string='BOQ Reference',
-        required=True
+        string='BOQ'
     )
-
     project_id = fields.Many2one(
         'project.project',
         string='Project',
-        related='boq_id.project_id',
-        store=True
     )
 
     estimation_line_ids = fields.One2many(
@@ -56,27 +53,18 @@ class ConstructionEstimation(models.Model):
     store=True)
 
 
+    tender_id = fields.Many2one(
+    'construction.tender',
+    string='Tender',
+    required=True)
+
+
 
     
 
 
 
-    @api.onchange('boq_id')
-    def _onchange_boq_id(self):
-        self.estimation_line_ids = False
-
-        if self.boq_id:
-            lines = []
-
-            for boq_line in self.boq_id.boq_line_ids:
-                lines.append((0, 0, {
-                    'boq_line_id': boq_line.id,
-                    'quantity': boq_line.quantity,
-                }))
-
-            self.estimation_line_ids = lines
-
-
+  
 
 
     @api.depends('estimation_line_ids.total_cost')
@@ -103,20 +91,22 @@ class ConstructionEstimation(models.Model):
         if self.quotation_id:
           raise  ValidationError("Quotation has already Exist")
         
-        order_lines=[]
+        order_lines = []
+
         for line in self.estimation_line_ids:
-            if not line.boq_line_id.product_id:
-                continue
-            order_lines.append((0,0,{
-                'product_id':line.boq_line_id.product_id.id,
-                'name':line.boq_line_id.name,
-                'product_uom_qty':line.quantity,
-                'price_unit':line.total_unit_cost
+            if not line.product_id:
+             continue
+
+            order_lines.append((0, 0, {
+             'product_id': line.product_id.id,
+             'name': line.name,
+             'product_uom_qty': line.quantity,
+             'price_unit': line.total_unit_cost,
             }))
 
 
         quotation = self.env["sale.order"].create({
-        "partner_id": self.boq_id.tender_id.customer_id.id,
+        "partner_id": self.tender_id.customer_id.id,
         "estimation_id": self.id,
         "order_line":order_lines
          })
@@ -153,12 +143,11 @@ class ConstructionEstimation(models.Model):
         "target": "current",
         "context": {
             "default_customer_id": self.quotation_id.partner_id.id,
-            "default_project_id": self.project_id.id,
-            "default_tender_id": self.boq_id.tender_id.id,
+            "default_tender_id": self.tender_id.id,
             "default_contract_value": self.total_estimation_cost,
             "default_estimation_id": self.id,
         },
-    }
+      }
 
 
 

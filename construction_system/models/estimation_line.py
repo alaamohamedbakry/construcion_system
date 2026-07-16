@@ -10,16 +10,21 @@ class ConstructionEstimationLine(models.Model):
         ondelete='cascade'
     )
 
-    boq_line_id = fields.Many2one(
-        'construction.boq.line',
-        string='BOQ Item',
-        required=True
-    )
+    name = fields.Char(
+    string="Item Description",
+    required=True)
+
+    product_id = fields.Many2one(
+    "product.product",
+    string="Product")
+
+    uom_id = fields.Many2one(
+    "uom.uom",
+    string="UOM")
 
     quantity = fields.Float(
         string='Quantity',
-        default=1
-    )
+        default=1)
 
     uom_id = fields.Many2one(
     'uom.uom',
