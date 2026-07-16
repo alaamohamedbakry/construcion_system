@@ -50,6 +50,7 @@
                                            readonly="1"/>
                                     <field name="quantity"
                                            readonly="1"/>
+                                           <field name="uom_id" readonly="1"/>
                                     <field name="material_cost"/>
                                     <field name="labor_cost"/>
                                     <field name="equipment_cost"/>

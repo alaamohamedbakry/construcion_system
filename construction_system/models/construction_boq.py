@@ -17,7 +17,7 @@ class ConstructionBOQ(models.Model):
     project_id = fields.Many2one(
         'project.project', 
         string='Project', 
-        required=True, 
+        # required=True, 
         index=True, 
         tracking=True
     )

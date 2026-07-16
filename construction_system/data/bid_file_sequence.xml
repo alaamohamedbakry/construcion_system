@@ -34,4 +34,15 @@
         <field name="prefix">CC/</field>
         <field name="padding">4</field>
     </record>
+
+    <record id="seq_construction_estimation" model="ir.sequence">
+    <field name="name">Construction Estimation</field>
+    <field name="code">construction.estimation</field>
+    <field name="prefix">EST/</field>
+    <field name="padding">3</field>
+    </record>
+
+
+
+
 </odoo>

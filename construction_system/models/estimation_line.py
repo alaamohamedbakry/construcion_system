@@ -21,7 +21,12 @@ class ConstructionEstimationLine(models.Model):
         default=1
     )
 
-
+    uom_id = fields.Many2one(
+    'uom.uom',
+    string='Unit',
+    related='boq_line_id.uom_id',
+    store=True
+)
     material_cost = fields.Float(
         string='Material Cost'
     )

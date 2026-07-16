@@ -57,22 +57,7 @@ class ConstructionEstimation(models.Model):
 
 
 
-    @api.model
-    def create(self, vals):
-        estimation = super().create(vals)
-
-        if estimation.boq_id:
-            lines = []
-
-            for boq_line in estimation.boq_id.boq_line_ids:
-                lines.append((0, 0, {
-                    'boq_line_id': boq_line.id,
-                    'quantity': boq_line.quantity,
-                }))
-
-            estimation.estimation_line_ids = lines
-
-        return estimation
+    
 
 
 
@@ -126,7 +111,7 @@ class ConstructionEstimation(models.Model):
                 'product_id':line.boq_line_id.product_id.id,
                 'name':line.boq_line_id.name,
                 'product_uom_qty':line.quantity,
-                'price_unit':line.total_cost
+                'price_unit':line.total_unit_cost
             }))
 
 
@@ -199,5 +184,28 @@ class ConstructionEstimation(models.Model):
         "view_mode": "form",
         "res_id": self.contract_id.id,
         }
+        
+    @api.model
+    def create(self, vals):
+
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'construction.estimation'
+            ) or 'New'
+
+        estimation = super().create(vals)
+
+        if estimation.boq_id:
+            lines = []
+
+            for boq_line in estimation.boq_id.boq_line_ids:
+                lines.append((0, 0, {
+                    'boq_line_id': boq_line.id,
+                    'quantity': boq_line.quantity,
+                }))
+
+            estimation.estimation_line_ids = lines
+
+        return estimation
 
 

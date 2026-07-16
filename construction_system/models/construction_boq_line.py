@@ -18,7 +18,8 @@ class ConstructionBOQLine(models.Model):
     )
     product_id = fields.Many2one(
         'product.product', 
-        string='Material/Service Item'
+        string='Material/Service Item',
+        required=True
     )
     uom_id = fields.Many2one(
         'uom.uom', 
@@ -60,3 +61,11 @@ class ConstructionBOQLine(models.Model):
                 raise ValidationError(_('Quantity must be greater than zero.'))
             if line.unit_price < 0:
                 raise ValidationError(_('Unit Price cannot be negative.'))
+            
+            
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        if self.product_id:
+            self.name = self.product_id.name
+            self.uom_id = self.product_id.uom_id
+            self.unit_price = self.product_id.standard_price
