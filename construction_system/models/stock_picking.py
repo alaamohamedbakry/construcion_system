@@ -9,3 +9,12 @@ class StockPicking(models.Model):
         string='Material Request',
         ondelete='set null',
     )
+
+    cost_center_id = fields.Many2one(
+        "construction.cost.center"
+    )
+
+
+    analytic_account_id = fields.Many2one(
+        "account.analytic.account"
+    )

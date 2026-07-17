@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
     'application': True,
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','project','purchase','stock','account','account_accountant','documents','sale_management','crm', 'hr'],
+    'depends': ['base','mail','project','purchase','stock','account','account_accountant','documents','sale_management','crm', 'hr','stock_accountant'],
 
     # always loaded
     'data': [
@@ -38,6 +38,7 @@ Long description of module's purpose
      'views/project_project_views.xml',
      'views/purchase_order_views.xml',
      'views/account_move_views.xml',
+     'views/progress_billing.xml',
      'views/menu.xml',
      'views/views.xml',
      'views/templates.xml',

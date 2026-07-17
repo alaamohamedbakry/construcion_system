@@ -1,6 +1,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-
+import logging
+_logger = logging.getLogger(__name__)
 
 class ConstructionCostCenter(models.Model):
     _name = "construction.cost.center"
@@ -36,8 +37,10 @@ class ConstructionCostCenter(models.Model):
 
     actual_cost = fields.Monetary(
         string="Actual Cost",
+        compute="_compute_actual_cost",
         currency_field="currency_id",
         readonly=True,
+        store=True
     )
 
     remaining_budget = fields.Monetary(
@@ -69,6 +72,36 @@ class ConstructionCostCenter(models.Model):
        "account.analytic.account",
        string='Account Analtyic',
         readonly=True)
+    
+    material_cost = fields.Monetary(
+    string="Material Cost",
+    compute="_compute_material_cost",
+    currency_field="currency_id",
+    readonly=True)
+
+    labor_cost = fields.Monetary(
+    string="Labor Cost",
+    compute="_compute_labor_cost",
+    currency_field="currency_id",
+    readonly=True)
+
+
+    purchase_cost = fields.Monetary(
+    string="Purchase Cost",
+    currency_field="currency_id",
+    readonly=True)
+
+    subcontract_cost = fields.Monetary(
+    string="Subcontract Cost",
+    currency_field="currency_id",
+    readonly=True)
+
+   
+
+
+    vendor_bill_count = fields.Integer(
+    string="Vendor Bills",
+    compute="_compute_vendor_bill_count")
 
 
 
@@ -99,6 +132,7 @@ class ConstructionCostCenter(models.Model):
 
 
         for rec in records:
+            
             analytic = self.env["account.analytic.account"].create({
             "name": rec.name,
             "plan_id": plan.id,
@@ -106,6 +140,9 @@ class ConstructionCostCenter(models.Model):
             })
 
             rec.analytic_account_id = analytic.id
+
+            if rec.task_id:
+                rec.task_id.cost_center_id = rec.id
 
         return records
 
@@ -140,3 +177,58 @@ class ConstructionCostCenter(models.Model):
         "view_mode": "form",
         "res_id": self.analytic_account_id.id,
          }
+    
+
+    @api.depends(
+    "material_cost",
+    "labor_cost",
+    "purchase_cost",
+    "subcontract_cost",
+)
+    def _compute_actual_cost(self):
+        for rec in self:
+            rec.actual_cost = (
+            rec.material_cost
+            + rec.labor_cost
+            + rec.purchase_cost
+            + rec.subcontract_cost
+         )
+            
+    def _compute_vendor_bill_count(self):
+     for rec in self:
+        rec.vendor_bill_count = self.env["account.move"].search_count([
+            ("move_type", "=", "in_invoice"),
+            ("cost_center_id", "=", rec.id),
+        ])
+
+
+
+    def action_open_vendor_bills(self):
+        self.ensure_one()
+
+        return {
+        "type": "ir.actions.act_window",
+        "name": "Vendor Bills",
+        "res_model": "account.move",
+        "view_mode": "list,form",
+        "domain": [
+            ("move_type", "=", "in_invoice"),
+            ("cost_center_id", "=", self.id),
+        ],
+        "context": {
+            "default_cost_center_id": self.id,
+        },
+        }
+    
+    @api.depends()
+    def _compute_material_cost(self):
+     for rec in self:
+        moves = self.env["stock.move"].search([
+            ("cost_center_id", "=", rec.id),
+            ("state", "=", "done"),
+        ])
+
+        rec.material_cost = sum(
+            move.product_uom_qty * move.product_id.standard_price
+            for move in moves
+        )

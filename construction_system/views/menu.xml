@@ -46,6 +46,12 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record id="construction_progress_billing_action" model="ir.actions.act_window">
+        <field name="name">Progress Billing</field>
+        <field name="res_model">construction.progress.billing</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <menuitem
         id="menu_construction_root"
         name="Construction"
@@ -105,5 +111,12 @@
      parent="menu_construction_root"
      action="action_construction_cost_center"
      sequence="70"/>
+
+     <menuitem
+      id="menu_progress_billing"
+     name="Progress Billing"
+     parent="menu_construction_root"
+     action="construction_progress_billing_action"
+     sequence="80"/>
      
 </odoo>

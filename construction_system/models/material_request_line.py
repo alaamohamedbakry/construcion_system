@@ -54,6 +54,8 @@ class ConstructionMaterialRequestLine(models.Model):
         store=True
     )
 
+
+
     @api.depends('quantity', 'unit_price')
     def _compute_subtotal(self):
         for rec in self:

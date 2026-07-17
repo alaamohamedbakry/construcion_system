@@ -16,5 +16,6 @@ from . import material_request_line
 from . import project
 from . import cost_center
 from . import project_task
-from . import project_project
 from . import account_move
+from . import progress_billing
+from . import stock_move

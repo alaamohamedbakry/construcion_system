@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="construction_progress_billing_tree" model="ir.ui.view">
+        <field name="name">construction.progress.billing.tree</field>
+        <field name="model">construction.progress.billing</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="contract_id"/>
+                <field name="customer_id"/>
+                <field name="billing_date"/>
+                <field name="progress_percentage"/>
+                <field name="invoice_amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="construction_progress_billing_form" model="ir.ui.view">
+        <field name="name">construction.progress.billing.form</field>
+        <field name="model">construction.progress.billing</field>
+        <field name="arch" type="xml">
+            <form string="Progress Billing">
+                <header>
+                    <button name="action_submit"
+                        string="Submit"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'draft'"/>
+                    <button name="action_approve"
+                        string="Approve"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'submitted'"/>
+                    <button name="action_generate_invoice"
+                        string="Generate Invoice"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'approved' or invoice_generated"/>
+                    <button name="action_view_invoice"
+                        string="View Invoice"
+                        type="object"
+                        invisible="not invoice_generated"/>
+                    <field name="state"
+                       widget="statusbar"
+                       statusbar_visible="draft,submitted,approved,invoiced"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_open_invoice" class="oe_stat_button" icon="fa-file-text-o" invisible="not invoice_id">
+                            <field name="invoice_count" widget="statinfo" string="Invoice"/>
+                        </button>
+                    </div>
+                    <field name="invoice_generated" invisible="1"/>
+                    <field name="invoice_id" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="project_id"/>
+                            <field name="contract_id"/>
+                            <field name="customer_id"/>
+                            <field name="billing_date"/>
+                        </group>
+                        <group>
+                            <field name="contract_value"/>
+                            <field name="progress_percentage"/>
+                            <field name="current_billing_amount"/>
+                            <field name="previous_billed_amount"/>
+                            <field name="invoice_amount"/>
+                            <field name="invoice_generated"/>
+                            <field name="payment_state" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -40,11 +40,11 @@ class ConstructionContract(models.Model):
     compute="_compute_project_count")
 
 
-    # invoice_ids = fields.One2many(
-    #     "account.move",
-    #     "contract_id",
-    #     string="Customer Invoices",
-    # )
+    invoice_ids = fields.One2many(
+        "account.move",
+        "contract_id",
+        string="Customer Invoices",
+    )
 
     # variation_order_ids = fields.One2many(
     #     "construction.variation.order",
@@ -52,26 +52,25 @@ class ConstructionContract(models.Model):
     #     string="Variation Orders",
     # )
 
-    # progress_billing_ids = fields.One2many(
-    #     "construction.progress.billing",
-    #     "contract_id",
-    #     string="Progress Billing",
-    # )
+    progress_billing_ids = fields.One2many(
+        "construction.progress.billing",
+        "contract_id",
+        string="Progress Billing",
+    )
 
 
-    # invoice_count = fields.Integer(
-    #     compute="_compute_invoice_count"
-    # )
+    invoice_count = fields.Integer(
+        compute="_compute_invoice_count"
+    )
 
     # variation_count = fields.Integer(
     #     compute="_compute_variation_count"
     # )
 
-    # progress_billing_count = fields.Integer(
-    #     compute="_compute_progress_billing_count"
-    # )
-
-
+    progress_billing_count = fields.Integer(
+        compute="_compute_progress_billing_count"
+    )
+   
     _sql_constraints = [
         (
             "unique_contract_number",
@@ -163,33 +162,33 @@ class ConstructionContract(models.Model):
 
         return {"type": "ir.actions.act_window_close"}
 
-    # def action_open_invoices(self):
-    #     self.ensure_one()
+    def action_open_invoices(self):
+        self.ensure_one()
 
-    #     action = self.env["ir.actions.actions"]._for_xml_id(
-    #         "account.action_move_out_invoice_type"
-    #     )
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_move_out_invoice_type"
+        )
 
-    #     action["domain"] = [("id", "in", self.invoice_ids.ids)]
-    #     action["context"] = {
-    #         "default_contract_id": self.id,
-    #         "default_move_type": "out_invoice",
-    #     }
+        action["domain"] = [("id", "in", self.invoice_ids.ids)]
+        action["context"] = {
+            "default_contract_id": self.id,
+            "default_move_type": "out_invoice",
+        }
 
-    #     return action
+        return action
 
-    # def action_open_progress_billing(self):
-    #     self.ensure_one()
+    def action_open_progress_billing(self):
+        self.ensure_one()
 
-    #     action = self.env["ir.actions.actions"]._for_xml_id(
-    #         "construction_system.action_construction_progress_billing"
-    #     )
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "construction_system.construction_progress_billing_action"
+        )
 
-    #     action["domain"] = [
-    #         ("contract_id", "=", self.id)
-    #     ]
+        action["domain"] = [
+            ("contract_id", "=", self.id)
+        ]
 
-    #     return action
+        return action
 
     # def action_open_variation_orders(self):
     #     self.ensure_one()
@@ -256,3 +255,19 @@ class ConstructionContract(models.Model):
         "view_mode": "form",
         "res_id": self.project_id.id,
       }
+    
+
+    def _compute_invoice_count(self):
+        for rec in self:
+            rec.invoice_count = len(
+            rec.invoice_ids.filtered(
+                lambda inv: inv.move_type == "out_invoice"
+            )
+        )
+
+
+    def _compute_progress_billing_count(self):
+     for rec in self:
+        rec.progress_billing_count = len(
+            rec.progress_billing_ids
+        )

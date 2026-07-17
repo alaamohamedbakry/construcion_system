@@ -17,6 +17,24 @@ class AccountMove(models.Model):
     )
 
 
+    progress_billing_id = fields.Many2one(
+        "construction.progress.billing",
+        string="Progress Billing",
+        readonly=True,
+    )
+
+    contract_id = fields.Many2one(
+        "construction.contract",
+        string="Contract"
+    )
+
+    project_id = fields.Many2one(
+        "project.project",
+        string="Project"
+    )
+
+
+
     def action_post(self):
 
         res = super().action_post()
@@ -28,6 +46,6 @@ class AccountMove(models.Model):
                 and bill.cost_center_id
             ):
 
-                bill.cost_center_id.actual_cost += bill.amount_total
+                bill.cost_center_id.purchase_cost += bill.amount_untaxed
 
         return res

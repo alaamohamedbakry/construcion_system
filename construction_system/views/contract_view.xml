@@ -32,6 +32,12 @@
                         <button name="action_view_project"  type="object" class="oe_stat_button" icon="fa-folder-open"  invisible="project_count == 0">
                             <field name="project_count" widget="statinfo" string="Project"/>
                         </button>
+                        <button name="action_open_progress_billing" type="object" class="oe_stat_button" icon="fa-file-text">
+                            <field name="progress_billing_count" widget="statinfo" string="Progress Billings"/>
+                        </button>
+                        <button name="action_open_invoices" type="object" class="oe_stat_button" icon="fa-money">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
                     </div>
                     <div class="oe_title">
                         <h1>
