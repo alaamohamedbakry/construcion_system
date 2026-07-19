@@ -20,6 +20,11 @@ class PurchaseOrder(models.Model):
     store=True,
     readonly=True,
 )
+    
+    subcontract_id = fields.Many2one(
+        "construction.subcontract",
+        string="Subcontract"
+    )
 
     def button_confirm(self):
         res = super().button_confirm()
@@ -37,8 +42,8 @@ class PurchaseOrder(models.Model):
         for order in self:
 
             for invoice in order.invoice_ids:
-
-                invoice.cost_center_id = order.cost_center_id.id
-                invoice.purchase_order_id = order.id
+             invoice.cost_center_id = order.cost_center_id.id
+             invoice.purchase_order_id = order.id
+             invoice.subcontract_id = order.subcontract_id.id
 
         return res

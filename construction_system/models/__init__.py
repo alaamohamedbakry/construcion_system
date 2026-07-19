@@ -19,3 +19,6 @@ from . import project_task
 from . import account_move
 from . import progress_billing
 from . import stock_move
+from . import sub_contract
+from . import sub_contract_line
+from . import variation_order

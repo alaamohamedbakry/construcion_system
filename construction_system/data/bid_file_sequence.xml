@@ -42,6 +42,21 @@
     <field name="padding">3</field>
     </record>
 
+     <record id="seq_construction_progress_billing" model="ir.sequence">
+    <field name="name">Construction Progress Billing</field>
+    <field name="code">construction.progress.billing</field>
+    <field name="prefix">BILL//</field>
+    <field name="padding">5</field>
+    </record>
+
+
+     <record id="seq_construction_subcontract" model="ir.sequence">
+    <field name="name">Construction SubContract</field>
+    <field name="code">construction.subcontract</field>
+    <field name="prefix">SUBCONT//</field>
+    <field name="padding">4</field>
+    </record>
+
 
 
 

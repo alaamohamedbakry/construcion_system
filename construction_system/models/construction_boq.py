@@ -107,5 +107,43 @@ class ConstructionBOQ(models.Model):
         self.write({'state': 'approved'})
 
 
+    def action_create_subcontract(self):
+        self.ensure_one()
 
-    
+        subcontract_lines = []
+
+        cost_centers = self.boq_line_ids.filtered("is_subcontract").mapped("cost_center_id")
+        if len(cost_centers) > 1:
+         raise ValidationError(
+        _("Selected subcontract lines must belong to the same Cost Center."))
+
+        if not cost_centers:
+            raise ValidationError(
+        _("Please select a Cost Center for the subcontract lines.") )
+
+        for line in self.boq_line_ids.filtered("is_subcontract"):
+         subcontract_lines.append((0, 0, {
+            "boq_line_id": line.id,
+            "name": line.name,
+            "product_id": line.product_id.id,
+            "uom_id": line.uom_id.id,
+            "quantity": line.quantity,
+            "unit_price": line.unit_price,
+        }))
+
+        if not subcontract_lines:
+            raise ValidationError(_("Please select at least one subcontract line."))
+
+        return {
+        "type": "ir.actions.act_window",
+        "res_model": "construction.subcontract",
+        "view_mode": "form",
+        "target": "current",
+        "context": {
+            "default_boq_id": self.id,
+            "default_project_id": self.project_id.id,
+            "default_cost_center_id": cost_centers.id,
+
+            "default_line_ids": subcontract_lines,
+         },
+        }

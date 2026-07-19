@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_construction_variation_order_tree" model="ir.ui.view">
+        <field name="name">construction.variation.order.tree</field>
+        <field name="model">construction.variation.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="contract_id"/>
+                <field name="amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Form View -->
+    <record id="view_construction_variation_order_form" model="ir.ui.view">
+        <field name="name">construction.variation.order.form</field>
+        <field name="model">construction.variation.order</field>
+        <field name="arch" type="xml">
+            <form string="Variation Order">
+                <header>
+                    <button name="action_submit"
+                            type="object"
+                            string="Submit"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_review"
+                            type="object"
+                            string="Review"
+                            class="btn-primary"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_approve"
+                            type="object"
+                            string="Approve"
+                            class="btn-success"
+                            invisible="state != 'review'"/>
+                    <button name="action_reject"
+                            type="object"
+                            string="Reject"
+                            class="btn-secondary"
+                            invisible="state not in ('submitted','review')"/>
+                    <button name="action_update_contract"
+                            type="object"
+                            string="Update Contract"
+                            class="btn-primary"
+                            invisible="state != 'approved'"/>
+                    <button name="action_generate_invoice"
+                            type="object"
+                            string="Generate Invoice"
+                            class="btn-primary"
+                            invisible="state != 'approved' or invoice_generated"/>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,submitted,review,approved,invoiced,rejected"/>
+                </header>
+                <sheet>
+                    <field name="invoice_generated" invisible="1"/>
+                    <field name="invoice_id" invisible="1"/>
+                    <!-- Smart Buttons -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_contract"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-file-text-o">
+                            <field name="contract_id" string="Contract"/>
+                        </button>
+                        <button name="action_open_invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-money"
+                                invisible="not invoice_id">
+                            <field name="invoice_id" string="Customer Invoice"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="project_id"/>
+                            <field name="contract_id"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <!-- Search View -->
+    <record id="view_construction_variation_order_search" model="ir.ui.view">
+        <field name="name">construction.variation.order.search</field>
+        <field name="model">construction.variation.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="contract_id"/>
+                <filter string="Draft"
+                        name="draft"
+                        domain="[('state','=','draft')]"/>
+                <filter string="Submitted"
+                        name="submitted"
+                        domain="[('state','=','submitted')]"/>
+                <filter string="Review"
+                        name="review"
+                        domain="[('state','=','review')]"/>
+                <filter string="Approved"
+                        name="approved"
+                        domain="[('state','=','approved')]"/>
+                <filter string="Invoiced"
+                        name="invoiced"
+                        domain="[('state','=','invoiced')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

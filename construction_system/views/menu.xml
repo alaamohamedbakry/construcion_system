@@ -12,111 +12,131 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="construction_bid_file_tree"/>
     </record>
-
     <record id="action_construction_boq" model="ir.actions.act_window">
         <field name="name">BOQs</field>
         <field name="res_model">construction.boq</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_construction_boq_tree"/>
     </record>
-
     <record id="action_construction_estimation" model="ir.actions.act_window">
         <field name="name">Estimations</field>
         <field name="res_model">construction.estimation</field>
         <field name="view_mode">tree,form</field>
     </record>
-
     <record id="action_construction_contract" model="ir.actions.act_window">
         <field name="name">Contracts</field>
         <field name="res_model">construction.contract</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="contract_view_tree"/>
     </record>
-
     <record id="action_construction_material_request" model="ir.actions.act_window">
         <field name="name">Material Requests</field>
         <field name="res_model">construction.material.request</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_material_request_tree"/>
     </record>
-
     <record id="action_construction_cost_center" model="ir.actions.act_window">
         <field name="name">Cost Centers</field>
         <field name="res_model">construction.cost.center</field>
         <field name="view_mode">tree,form</field>
     </record>
-
     <record id="construction_progress_billing_action" model="ir.actions.act_window">
         <field name="name">Progress Billing</field>
         <field name="res_model">construction.progress.billing</field>
         <field name="view_mode">tree,form</field>
     </record>
-
+    <record id="action_construction_subcontract" model="ir.actions.act_window">
+        <field name="name">Subcontracts</field>
+        <field name="res_model">construction.subcontract</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+     <record id="action_construction_variation_order" model="ir.actions.act_window">
+        <field name="name">Variation Orders</field>
+        <field name="res_model">construction.variation.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
     <menuitem
         id="menu_construction_root"
         name="Construction"
         sequence="10"/>
-
     <menuitem
     id="menu_tender_management"
     name="Tender Management"
     parent="menu_construction_root"
     sequence="10"/>
-
     <menuitem
     id="menu_construction_tender"
     name="Tenders"
     parent="menu_tender_management"
     action="action_tender"
     sequence="10"/>
-
     <menuitem
     id="menu_construction_bid_file"
     name="Bid Files"
     parent="menu_tender_management"
     action="action_construction_bid_file"
     sequence="20"/>
-
     <menuitem
         id="menu_construction_boq"
         name="BOQs"
         parent="menu_construction_root"
         action="action_construction_boq"
-        sequence="20"/>
-
+        sequence="40"/>
     <menuitem
         id="menu_construction_estimation"
         name="Estimations"
         parent="menu_construction_root"
         action="action_construction_estimation"
-        sequence="25"/>
+        sequence="50"/>
+
+    <menuitem
+        id="menu_contract_management"
+        name="Contracts"
+        parent="menu_construction_root"
+        sequence="60"/>
 
     <menuitem
         id="menu_construction_contract"
-        name="Contracts"
-        parent="menu_construction_root"
+        name="Contract"
+        parent="menu_contract_management"
         action="action_construction_contract"
-        sequence="25"/>
+        sequence="60"/>
 
+     <menuitem
+        id="menu_variation_order"
+        name="Varition Order"
+        parent="menu_contract_management"
+        action="action_construction_variation_order"
+        sequence="60"/>
     <menuitem
         id="menu_construction_material_request"
         name="Material Requests"
         parent="menu_construction_root"
         action="action_construction_material_request"
-        sequence="30"/>
-
-     <menuitem
+        sequence="70"/>
+    <menuitem
       id="menu_construction_cost_center"
      name="Cost Centers"
      parent="menu_construction_root"
      action="action_construction_cost_center"
-     sequence="70"/>
-
-     <menuitem
+     sequence="80"/>
+    <menuitem
+    id="menu_project_management"
+    name="Project Management"
+    parent="menu_construction_root"
+    sequence="20"/>
+    <menuitem
       id="menu_progress_billing"
      name="Progress Billing"
-     parent="menu_construction_root"
+     parent="menu_project_management"
      action="construction_progress_billing_action"
-     sequence="80"/>
-     
+     sequence="20"/>
+    <menuitem
+    id="menu_construction_subcontract"
+    name="Subcontracts"
+    parent="construction_system.menu_construction_root"
+    action="action_construction_subcontract"
+    sequence="30"/>
+
+    
 </odoo>

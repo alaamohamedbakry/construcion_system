@@ -46,6 +46,15 @@ class ConstructionBOQLine(models.Model):
     )
 
 
+    is_subcontract = fields.Boolean(
+    string="Subcontract"
+    )
+
+    cost_center_id = fields.Many2one(
+    "construction.cost.center",
+    string="Cost Center")
+
+
 
     @api.depends('quantity', 'unit_price')
     def _compute_total_cost(self):
@@ -69,3 +78,7 @@ class ConstructionBOQLine(models.Model):
             self.name = self.product_id.name
             self.uom_id = self.product_id.uom_id
             self.unit_price = self.product_id.standard_price
+
+
+
+  

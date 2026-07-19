@@ -33,19 +33,21 @@ class AccountMove(models.Model):
         string="Project"
     )
 
+    subcontract_id = fields.Many2one(
+    "construction.subcontract",
+    string="Subcontract")
+
 
 
     def action_post(self):
-
         res = super().action_post()
 
         for bill in self:
 
-            if (
-                bill.move_type == 'in_invoice'
-                and bill.cost_center_id
-            ):
+         if bill.subcontract_id and bill.cost_center_id:
+            bill.cost_center_id.subcontract_cost += bill.amount_untaxed
 
-                bill.cost_center_id.purchase_cost += bill.amount_untaxed
+         elif bill.cost_center_id:
+            bill.cost_center_id.purchase_cost += bill.amount_untaxed
 
         return res

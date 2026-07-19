@@ -40,7 +40,7 @@ class ConstructionCostCenter(models.Model):
         compute="_compute_actual_cost",
         currency_field="currency_id",
         readonly=True,
-        store=True
+        store=False
     )
 
     remaining_budget = fields.Monetary(
@@ -77,13 +77,13 @@ class ConstructionCostCenter(models.Model):
     string="Material Cost",
     compute="_compute_material_cost",
     currency_field="currency_id",
-    readonly=True)
+    readonly=True,store=False)
 
     labor_cost = fields.Monetary(
     string="Labor Cost",
     compute="_compute_labor_cost",
     currency_field="currency_id",
-    readonly=True)
+    readonly=True,store=False)
 
 
     purchase_cost = fields.Monetary(
@@ -91,10 +91,9 @@ class ConstructionCostCenter(models.Model):
     currency_field="currency_id",
     readonly=True)
 
-    subcontract_cost = fields.Monetary(
+    subcontract_cost = fields.Float(
     string="Subcontract Cost",
-    currency_field="currency_id",
-    readonly=True)
+    default=0.0,)
 
    
 
@@ -183,8 +182,7 @@ class ConstructionCostCenter(models.Model):
     "material_cost",
     "labor_cost",
     "purchase_cost",
-    "subcontract_cost",
-)
+    "subcontract_cost")
     def _compute_actual_cost(self):
         for rec in self:
             rec.actual_cost = (
@@ -232,3 +230,19 @@ class ConstructionCostCenter(models.Model):
             move.product_uom_qty * move.product_id.standard_price
             for move in moves
         )
+
+
+    @api.depends("analytic_account_id")
+    def _compute_labor_cost(self):
+        AnalyticLine = self.env["account.analytic.line"]
+
+        for rec in self:
+            if not rec.analytic_account_id:
+                rec.labor_cost = 0.0
+                continue
+
+            lines = AnalyticLine.search([
+                ("account_id", "=", rec.analytic_account_id.id)
+            ])
+
+            rec.labor_cost = abs(sum(lines.mapped("amount")))

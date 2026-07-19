@@ -39,6 +39,8 @@ Long description of module's purpose
      'views/purchase_order_views.xml',
      'views/account_move_views.xml',
      'views/progress_billing.xml',
+     'views/sub_contract_views.xml',
+     'views/variation_order_views.xml',
      'views/menu.xml',
      'views/views.xml',
      'views/templates.xml',
