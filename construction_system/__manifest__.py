@@ -41,6 +41,14 @@ Long description of module's purpose
      'views/progress_billing.xml',
      'views/sub_contract_views.xml',
      'views/variation_order_views.xml',
+     'views/budget_vs_actual_report_views.xml',
+     'views/project_progress_report_views.xml',
+     'views/cost_center_performance_report.xml',
+     'views/project_profitability_report.xml',
+     'views/variation_order_report.xml',
+     'views/purchase_order_report.xml',
+     'views/material_consumption_report.xml',
+     'views/cash_flow_report.xml',
      'views/menu.xml',
      'views/views.xml',
      'views/templates.xml',
@@ -50,5 +58,23 @@ Long description of module's purpose
     'demo': [
         'demo/demo.xml',
     ],
+
+
+    'assets': {
+
+    'web.assets_backend': [
+
+        'construction_system/static/src/js/dashboard.js',
+
+        'construction_system/static/src/xml/dashboard_template.xml',
+
+        'construction_system/static/src/scss/dashboard.scss',
+
+        'https://cdn.jsdelivr.net/npm/chart.js',
+
+
+    ],
+
+},
 }
 

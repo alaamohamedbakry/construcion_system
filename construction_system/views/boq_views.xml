@@ -54,14 +54,12 @@
                                            string="Description"/>
                                     <field name="product_id"
                                            string="Item"/>
-                                    <field name="uom_id"
-                                           string="UOM"/>
+                                    <field name="uom_id"/>
                                     <field name="quantity"/>
                                     <field name="unit_price"/>
                                     <field name="total_cost"
                                            readonly="1"
                                            sum="Total"/>
-
                                     <field name="is_subcontract" string="SubContract"/>
                                     <field name="cost_center_id"/>
                                 </tree>

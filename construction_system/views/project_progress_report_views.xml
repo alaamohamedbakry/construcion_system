@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_project_progress_report_form"
+            model="ir.ui.view">
+        <field name="name">project.progress.report.form</field>
+        <field name="model">project.progress.report</field>
+        <field name="arch" type="xml">
+            <form string="Project Progress Report" create="false">
+            <header>
+             <button
+            name="action_export_excel"
+            type="object"
+            string="Export Excel"
+            class="btn-primary"/>
+            </header>
+                <sheet >
+                    <group>
+                        <field name="name" readonly="1"/>
+                    </group>
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+    <record id="action_project_progress_report" model="ir.actions.act_window">
+        <field name="name">Project Progress Report</field>
+        <field name="res_model">project.progress.report</field>
+        <field name="view_id" ref="view_project_progress_report_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+</odoo>

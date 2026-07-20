@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- ========================================================= -->
+    <!-- Actions -->
+    <!-- ========================================================= -->
+    <record id="action_construction_dashboard" model="ir.actions.client">
+
+        <field name="name">Executive Dashboard</field>
+
+        <field name="tag">construction_dashboard</field>
+
+    </record>
     <record id="action_tender" model="ir.actions.act_window">
         <field name="name">Tenders</field>
         <field name="res_model">construction.tender</field>
@@ -50,93 +60,177 @@
         <field name="res_model">construction.subcontract</field>
         <field name="view_mode">tree,form</field>
     </record>
-     <record id="action_construction_variation_order" model="ir.actions.act_window">
+    <record id="action_construction_variation_order" model="ir.actions.act_window">
         <field name="name">Variation Orders</field>
         <field name="res_model">construction.variation.order</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <!-- ========================================================= -->
+    <!-- Root -->
+    <!-- ========================================================= -->
     <menuitem
         id="menu_construction_root"
         name="Construction"
         sequence="10"/>
+    <!-- ========================================================= -->
+    <!-- Executive Dashboard -->
+    <!-- ========================================================= -->
     <menuitem
-    id="menu_tender_management"
-    name="Tender Management"
+    id="menu_construction_dashboard"
+    name="Executive Dashboard"
     parent="menu_construction_root"
-    sequence="10"/>
+    action="action_construction_dashboard"
+    sequence="1"/>
+    <!-- ========================================================= -->
+    <!-- Tender Management -->
+    <!-- ========================================================= -->
     <menuitem
-    id="menu_construction_tender"
-    name="Tenders"
-    parent="menu_tender_management"
-    action="action_tender"
-    sequence="10"/>
+        id="menu_tender_management"
+        name="Tender Management"
+        parent="menu_construction_root"
+        sequence="10"/>
     <menuitem
-    id="menu_construction_bid_file"
-    name="Bid Files"
-    parent="menu_tender_management"
-    action="action_construction_bid_file"
-    sequence="20"/>
+        id="menu_construction_tender"
+        name="Tenders"
+        parent="menu_tender_management"
+        action="action_tender"
+        sequence="10"/>
+    <menuitem
+        id="menu_construction_bid_file"
+        name="Bid Files"
+        parent="menu_tender_management"
+        action="action_construction_bid_file"
+        sequence="20"/>
     <menuitem
         id="menu_construction_boq"
         name="BOQs"
-        parent="menu_construction_root"
+        parent="menu_tender_management"
         action="action_construction_boq"
-        sequence="40"/>
+        sequence="30"/>
     <menuitem
         id="menu_construction_estimation"
         name="Estimations"
-        parent="menu_construction_root"
+        parent="menu_tender_management"
         action="action_construction_estimation"
-        sequence="50"/>
-
+        sequence="40"/>
+    <!-- ========================================================= -->
+    <!-- Project Management -->
+    <!-- ========================================================= -->
     <menuitem
-        id="menu_contract_management"
-        name="Contracts"
+        id="menu_project_management"
+        name="Project Management"
         parent="menu_construction_root"
-        sequence="60"/>
-
+        sequence="20"/>
     <menuitem
         id="menu_construction_contract"
-        name="Contract"
-        parent="menu_contract_management"
+        name="Contracts"
+        parent="menu_project_management"
         action="action_construction_contract"
-        sequence="60"/>
-
-     <menuitem
+        sequence="10"/>
+    <menuitem
         id="menu_variation_order"
-        name="Varition Order"
-        parent="menu_contract_management"
+        name="Variation Orders"
+        parent="menu_project_management"
         action="action_construction_variation_order"
-        sequence="60"/>
+        sequence="20"/>
+    <menuitem
+        id="menu_construction_cost_center"
+        name="Cost Centers"
+        parent="menu_project_management"
+        action="action_construction_cost_center"
+        sequence="30"/>
+    <menuitem
+        id="menu_construction_subcontract"
+        name="Subcontracts"
+        parent="menu_project_management"
+        action="action_construction_subcontract"
+        sequence="40"/>
+    <menuitem
+        id="menu_progress_billing"
+        name="Progress Billing"
+        parent="menu_project_management"
+        action="construction_progress_billing_action"
+        sequence="50"/>
+    <!-- ========================================================= -->
+    <!-- Procurement -->
+    <!-- ========================================================= -->
+    <menuitem
+        id="menu_procurement"
+        name="Procurement"
+        parent="menu_construction_root"
+        sequence="30"/>
     <menuitem
         id="menu_construction_material_request"
         name="Material Requests"
-        parent="menu_construction_root"
+        parent="menu_procurement"
         action="action_construction_material_request"
-        sequence="70"/>
+        sequence="10"/>
+    <!-- ========================================================= -->
+    <!-- Reports -->
+    <!-- ========================================================= -->
     <menuitem
-      id="menu_construction_cost_center"
-     name="Cost Centers"
-     parent="menu_construction_root"
-     action="action_construction_cost_center"
-     sequence="80"/>
+        id="menu_construction_reports"
+        name="Reports"
+        parent="menu_construction_root"
+        sequence="90"/>
+    <!-- Executive Reports -->
     <menuitem
-    id="menu_project_management"
-    name="Project Management"
-    parent="menu_construction_root"
-    sequence="20"/>
+        id="menu_executive_reports"
+        name="Executive Reports"
+        parent="menu_construction_reports"
+        sequence="10"/>
     <menuitem
-      id="menu_progress_billing"
-     name="Progress Billing"
-     parent="menu_project_management"
-     action="construction_progress_billing_action"
-     sequence="20"/>
+        id="menu_budget_vs_actual_report"
+        name="Budget vs Actual Cost Report"
+        parent="menu_executive_reports"
+        action="action_budget_vs_actual_report"
+        sequence="10"/>
     <menuitem
-    id="menu_construction_subcontract"
-    name="Subcontracts"
-    parent="construction_system.menu_construction_root"
-    action="action_construction_subcontract"
-    sequence="30"/>
-
-    
+        id="menu_project_progress_report"
+        name="Project Progress Report"
+        parent="menu_executive_reports"
+        action="action_project_progress_report"
+        sequence="20"/>
+    <menuitem
+        id="menu_cost_center_performane_report"
+        name="Cost Center Performance Report"
+        parent="menu_executive_reports"
+        action="action_cost_center_performane_report"
+        sequence="30"/>
+    <menuitem
+        id="menu_project_profitability_report"
+        name="Project Profitability Report"
+        parent="menu_executive_reports"
+        action="action_project_profiability_report"
+        sequence="40"/>
+    <!-- Operational Reports -->
+    <menuitem
+        id="menu_operational_reports"
+        name="Operational Reports"
+        parent="menu_construction_reports"
+        sequence="20"/>
+    <menuitem
+        id="menu_variation_order_report"
+        name="Variation Order Report"
+        parent="menu_operational_reports"
+        action="action_variation_order_report"
+        sequence="10"/>
+    <menuitem
+        id="menu_material_consumption_report"
+        name="Material Consumption Report"
+        parent="menu_operational_reports"
+        action="action_material_consumption_report"
+        sequence="20"/>
+    <menuitem
+        id="menu_purchase_order_report"
+        name="Purchase Order Report"
+        parent="menu_operational_reports"
+        action="action_purchase_order_report"
+        sequence="30"/>
+    <menuitem
+        id="menu_cash_flow_report"
+        name="Cash Flow Report"
+        parent="menu_operational_reports"
+        action="action_cash_flow_report"
+        sequence="40"/>
 </odoo>

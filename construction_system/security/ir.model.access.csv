@@ -13,3 +13,12 @@ access_construction_progress_billing,construction.progress.billing.user,model_co
 access_construction_subcontract,construction.subcontract,model_construction_subcontract,,1,1,1,1
 access_construction_subcontract_line,construction.subcontract.line,model_construction_subcontract_line,,1,1,1,1
 access_construction_variation_order,construction.variation.order,model_construction_variation_order,,1,1,1,1
+access_budget_vs_actual_report,budget.vs.actual.report,model_budget_vs_actual_report,,1,1,1,1
+access_project_progress_report,project.progress.report,model_project_progress_report,,1,1,1,1
+access_cost_center_performane_report,cost.center.performane.report,model_cost_center_performance_report,,1,1,1,1
+access_project_profibility_report,project.profitability.report,model_project_profitability_report,,1,1,1,1
+access_variation_order_report,variation.order.report,model_variation_order_report,,1,1,1,1
+access_purchase_order_report,purchase.order.report,model_purchase_order_report,,1,1,1,1
+access_material_consumption_report,material.consumption.report,model_material_consumption_report,,1,1,1,1
+access_cash_flow_report,cash.flow.report,model_cash_flow_report,,1,1,1,1
+access_dashboard_view,construction.dashboard,model_construction_dashboard,,1,1,1,1

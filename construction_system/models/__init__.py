@@ -22,3 +22,4 @@ from . import stock_move
 from . import sub_contract
 from . import sub_contract_line
 from . import variation_order
+from . import dashboard

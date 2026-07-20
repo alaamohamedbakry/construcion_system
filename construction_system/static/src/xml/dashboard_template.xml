@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="construction_system.ConstructionDashboard">
+        <div class="o_construction_dashboard container-fluid p-4">
+            <!-- =========================
+         KPI CARDS
+    ========================== -->
+            <div class="row g-3">
+                <t t-set="kpis"
+           t-value="[
+            ['Total Projects','total_projects'],
+            ['Running Projects','running_projects'],
+            ['Completed Projects','completed_projects'],
+            ['Delayed Projects','delayed_projects'],
+            ['Remaining Budget','remaining_budget'],
+            ['Profit','total_profit'],
+            ['Purchase Orders','purchase_orders'],
+            ['Material Requests','material_requests']
+           ]"/>
+                <t t-foreach="kpis"
+           t-as="kpi"
+           t-key="kpi[1]">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card shadow-sm h-100 kpi-card">
+                            <div class="card-body">
+                                <div class="kpi-title">
+                                    <t t-out="kpi[0]"/>
+                                </div>
+                                <div class="kpi-value">
+                                    <t t-if="typeof state.data[kpi[1]] === 'number'">
+                                        <t t-out="state.data[kpi[1]].toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        })"/>
+    </t>
+                                    <t t-else="">
+                                        <t t-out="state.data[kpi[1]]"/>
+    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+            <!-- =========================
+         MAIN CHARTS
+    ========================== -->
+            <div class="row mt-4">
+                <div class="col-lg-6">
+                    <div class="card chart-card shadow-sm">
+                        <div class="card-header">
+                    Budget vs Actual Cost
+                </div>
+                        <div class="card-body">
+                            <canvas id="budgetChart" style="width:100%;height:250px;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card chart-card shadow-sm">
+                        <div class="card-header">
+                    Project Progress
+                </div>
+                        <div class="card-body">
+                            <canvas id="progressChart" style="width:100%;height:250px;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- =========================
+         ADVANCED CHARTS
+    ========================== -->
+            <div class="row mt-4">
+                <div class="col-lg-4">
+                    <div class="card chart-card shadow-sm">
+                        <div class="card-header">
+                    Cost Distribution
+                </div>
+                        <div class="card-body">
+                            <canvas id="costDistributionChart" style="width:100%;height:250px;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card chart-card shadow-sm">
+                        <div class="card-header">
+                    Cash Flow Analysis
+                </div>
+                        <div class="card-body">
+                            <canvas id="cashFlowChart" style="width:100%;height:250px;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card chart-card shadow-sm">
+                        <div class="card-header">
+                    Purchase Order Status
+                </div>
+                        <div class="card-body">
+                            <canvas id="purchaseStatusChart" style="width:100%;height:250px;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- =========================
+     TABLES
+========================== -->
+            <div class="row mt-4">
+                <!-- Critical Tasks -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm dashboard-table">
+                        <div class="card-header">
+                Critical Tasks
+            </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Task</th>
+                                        <th>Project</th>
+                                        <th>Deadline</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="state.data.critical_tasks"
+                           t-as="task"
+                           t-key="task_index">
+                                        <tr>
+                                            <td>
+                                                <t t-out="task.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="task.project"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="task.deadline"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Top Cost Centers -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm dashboard-table">
+                        <div class="card-header">
+                Top Cost Centers
+            </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Cost Center</th>
+                                        <th>Budget</th>
+                                        <th>Actual</th>
+                                        <th>Remaining</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="state.data.top_cost_centers"
+                           t-as="cc"
+                           t-key="cc.name">
+                                        <tr>
+                                            <td>
+                                                <t t-out="cc.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="cc.budget"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="cc.actual"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="cc.remaining"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <!-- Project Profitability -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm dashboard-table">
+                        <div class="card-header">
+                Project Profitability
+            </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Project</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="state.data.project_profitability"
+                           t-as="project"
+                           t-key="project.name">
+                                        <tr>
+                                            <td>
+                                                <t t-out="project.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="project.revenue"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="project.cost"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="project.profit"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Open Purchase Orders -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm dashboard-table">
+                        <div class="card-header">
+                Open Purchase Orders
+            </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>PO</th>
+                                        <th>Vendor</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="state.data.open_purchase_orders"
+                           t-as="po"
+                           t-key="po.name">
+                                        <tr>
+                                            <td>
+                                                <t t-out="po.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="po.vendor"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="po.amount"/>
+                                            </td>
+                                            <td>
+                                                <t t-out="po.state"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

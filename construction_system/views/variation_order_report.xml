@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_variation_report_form"
+            model="ir.ui.view">
+        <field name="name">variation.order.report.form</field>
+        <field name="model">variation.order.report</field>
+        <field name="arch" type="xml">
+            <form string="Variation Order Report" create="false">
+            <header>
+             <button
+            name="action_export_excel"
+            type="object"
+            string="Export Excel"
+            class="btn-primary"/>
+            </header>
+                <sheet >
+                    <group>
+                        <field name="name" readonly="1"/>
+                    </group>
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+    <record id="action_variation_order_report" model="ir.actions.act_window">
+        <field name="name">Variation Order Report</field>
+        <field name="res_model">variation.order.report</field>
+        <field name="view_id" ref="view_variation_report_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+</odoo>
